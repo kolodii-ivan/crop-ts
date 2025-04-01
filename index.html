@@ -1,122 +1,322 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Jcrop v2.0.0-RC1 | Jcrop Jcrop</title>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <link rel="stylesheet" href="demos/demo_files/main.css">
-    <link rel="stylesheet" href="demos/demo_files/demos.css">
-  </head>
-  <body>
-    <div class="navbar navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container">
-          <button type="button" data-toggle="collapse" data-target="nav-collapse" class="btn btn-navbar"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a class="brand">Jcrop</a>
-          <div class="nav-collapse collapse">
-            <ul class="nav">
-              <li><a href="demos/">Demos</a>
-              </li>
-              <li><a href="http://beta.jcrop.org/doc/">Docs</a>
-              </li>
-              <li><a href="http://beta.jcrop.org/contact/">Contact</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jcrop-TS Demos</title>
+  <link rel="stylesheet" href="./dist/jcrop.css">
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      line-height: 1.6;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1 {
+      color: #333;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 10px;
+    }
+    .demo-wrapper {
+      margin: 20px 0;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 20px;
+      background: #f9f9f9;
+    }
+    .demo-title {
+      font-size: 1.4em;
+      margin-top: 0;
+      color: #444;
+    }
+    img {
+      max-width: 100%;
+    }
+    .buttons {
+      margin-top: 10px;
+    }
+    button {
+      padding: 8px 12px;
+      background: #0078d7;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-right: 8px;
+      margin-bottom: 8px;
+    }
+    button:hover {
+      background: #0067b8;
+    }
+    .coords {
+      margin-top: 15px;
+      font-family: monospace;
+      background: #f5f5f5;
+      padding: 10px;
+      border-radius: 4px;
+    }
+    .code {
+      background: #f5f5f5;
+      padding: 15px;
+      border-radius: 4px;
+      overflow: auto;
+      margin: 10px 0;
+    }
+    .links {
+      display: flex;
+      gap: 10px;
+      margin: 20px 0;
+    }
+    .links a {
+      padding: 8px 16px;
+      background: #f5f5f5;
+      text-decoration: none;
+      color: #333;
+      border-radius: 4px;
+    }
+    .links a:hover {
+      background: #eee;
+    }
+  </style>
+</head>
+<body>
+  <h1>Jcrop-TS Demos</h1>
+  
+  <div class="links">
+    <a href="#basic">Basic</a>
+    <a href="#aspect">Aspect Ratio</a>
+    <a href="#multiple">Multiple Selections</a>
+    <a href="#api">API Demo</a>
+  </div>
+  
+  <!-- Basic Demo -->
+  <div class="demo-wrapper" id="basic">
+    <h2 class="demo-title">Basic Usage</h2>
+    <p>Simple image cropping with default options.</p>
+    
+    <div id="basic-container">
+      <img src="./demos/demo_files/pool.jpg" id="basic-image" alt="Crop this image">
     </div>
-    <div class="container">
-      <div class="row">
-        <div class="span12">
-          <div class="jc-demo-box">
-            <div class="page-header">
-              <ul class="breadcrumb first">
-                <li><a href="http://jcrop.org/">Jcrop.org</a><span class="divider">/</span></li>
-                <li class="active">Jcrop v2.0.0-RC1</li>
-              </ul>
-              <h1>Jcrop v2.0.0-RC1</h1>
-            </div>
-            <div class="main-menu menu-box">
-              <h3>Jcrop Demos</h3>
-              <ul class="links">
-                <li><a href="demos/basic.html">Hello World</a></li>
-                <li><a href="demos/thumbnail.html">Thumbnail Preview</a></li>
-                <li><a href="demos/panel.html">Feature Panel</a></li>
-                <li><a href="demos/coords.html">Dimensions</a></li>
-                <li><a href="demos/circle.html">Circles</a></li>
-              </ul>
-            </div>
-            <p><b>Build Date:</b> Sun Sep 08 2013 02:56:09 GMT+0000 (UTC)</p><h3>What&#39;s Included</h3>
-
-<p>The this archive contains the latest version of <strong>Jcrop</strong>,
-comprised of the following:</p>
-
-<ul><li>Latest version of <a href="js/Jcrop.js"><strong>Jcrop.js</strong></a> and <a href="css/Jcrop.css"><strong>Jcrop.css</strong></a>, the primary requisite files</li><li>Minimized versions of both of the above (<a href="js/Jcrop.min.js">Jcrop.min.js</a>, <a href="css/Jcrop.min.css">Jcrop.min.css</a>)</li><li>Several demos are also included, see links in menu at right</li></ul>
-            <hr><h1>Jcrop Image Cropping Plugin</h1>
-
-<p>Jcrop is the quick and easy way to add image cropping functionality to
-your web application. It combines the ease-of-use of a typical jQuery
-plugin with a powerful cross-platform DHTML cropping engine that is
-faithful to familiar desktop graphics applications.</p>
-
-<h3>Feature Overview</h3>
-
-<ul><li>Attaches unobtrusively to any image or block element</li><li>Completely based on true prototypical Javascript objects for extreme flexibility</li><li>Supports multiple active selections, per-selection customization</li><li>Supports aspect ratio locking, minimum/maximum size, and other features</li><li>Acts as in-line form element, can receive focus, tab through</li><li>Keyboard support for nuding selections and trapping other keys</li><li>Inherently API-driven and stylable with CSS</li><li>Mobile touch support for iOS and Android</li></ul>
-
-<h3>Cross-platform Compatibility</h3>
-
-<p>The current version of Jcrop has been cross-platform tested and core functionality
-works in all the following browsers:</p>
-
-<ul><li>Firefox 3+</li><li>Safari 4+</li><li>Opera 9.5+</li><li>Google Chrome 14+</li><li>Internet Explorer 7+</li></ul>
-
-<p>Older versions of some browsers may also work.</p>
-
-<p>Always thoroughly test any desired functionality on all target platforms and devices.</p>
-
-<h5>Legacy IE Compatibility</h5>
-
-<p>Internet Explorer 6 suffers some visual problems with the new CSS structure
-and will not be explicitly supported from v2.x and up. Currently Jcrop can still
-be used in IE6, it just looks ugly. IE7 and newer versions deliver a nearly flawless
-Jcrop experience.</p>
-
-<hr/>
-
-<h2>MIT License</h2>
-
-<p><strong>Jcrop is free software under MIT License.</strong></p>
-
-<h4>Copyright (c) 2008-2015 Tapmodo Interactive LLC</h4>
-
-<h5><a href="http://github.com/tapmodo/Jcrop">http://github.com/tapmodo/Jcrop</a></h5>
-
-<p>Permission is hereby granted, free of charge, to any person obtaining
-a copy of this software and associated documentation files (the
-&quot;Software&quot;), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:</p>
-
-<p>The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.</p>
-
-<p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
-LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
-            <div class="tapmodo-footer"><a href="http://tapmodo.com" class="tapmodo-logo segment">tapmodo.com</a>
-              <div class="segment"><b>&copy; 2008-2015 Tapmodo Interactive LLC</b>
-                <div>Jcrop is free software released under <a href="../MIT-LICENSE.txt">MIT License</a></div>
-              </div>
-            </div>
-            <div class="clearfix"></div>
-          </div>
-        </div>
-      </div>
+    
+    <div class="coords" id="basic-coords">
+      Coordinates: None
     </div>
-  </body>
+    
+    <div class="code">
+      <pre><code>// Initialize with default options
+const jcrop = Jcrop('#basic-image');</code></pre>
+    </div>
+  </div>
+  
+  <!-- Aspect Ratio Demo -->
+  <div class="demo-wrapper" id="aspect">
+    <h2 class="demo-title">Aspect Ratio</h2>
+    <p>Fixed aspect ratio (16:9) selection.</p>
+    
+    <div id="aspect-container">
+      <img src="./demos/demo_files/sago.jpg" id="aspect-image" alt="Crop this image">
+    </div>
+    
+    <div class="buttons">
+      <button id="aspect-16-9">16:9</button>
+      <button id="aspect-4-3">4:3</button>
+      <button id="aspect-1-1">1:1</button>
+      <button id="aspect-free">Free</button>
+    </div>
+    
+    <div class="coords" id="aspect-coords">
+      Coordinates: None
+    </div>
+  </div>
+  
+  <!-- Multiple Selections Demo -->
+  <div class="demo-wrapper" id="multiple">
+    <h2 class="demo-title">Multiple Selections</h2>
+    <p>Create multiple crop regions on a single image.</p>
+    
+    <div id="multiple-container">
+      <img src="./demos/demo_files/pool.jpg" id="multiple-image" alt="Crop this image">
+    </div>
+    
+    <div class="buttons">
+      <button id="multiple-add">Add Selection</button>
+      <button id="multiple-remove">Remove Active</button>
+      <button id="multiple-remove-all">Remove All</button>
+    </div>
+    
+    <div class="coords" id="multiple-coords">
+      Coordinates: None
+    </div>
+  </div>
+  
+  <!-- API Demo -->
+  <div class="demo-wrapper" id="api">
+    <h2 class="demo-title">API Controls</h2>
+    <p>Demonstrate various API methods.</p>
+    
+    <div id="api-container">
+      <img src="./demos/demo_files/sago.jpg" id="api-image" alt="Crop this image">
+    </div>
+    
+    <div class="buttons">
+      <button id="api-setselect">Set Selection [100,100,200,200]</button>
+      <button id="api-animate">Animate To Center</button>
+      <button id="api-disable">Disable</button>
+      <button id="api-enable">Enable</button>
+      <button id="api-destroy">Destroy</button>
+      <button id="api-reinit">Reinitialize</button>
+    </div>
+    
+    <div class="coords" id="api-coords">
+      Coordinates: None
+    </div>
+  </div>
+
+  <script src="./dist/jcrop.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Basic Demo
+      const basicJcrop = Jcrop('#basic-image', {
+        setSelect: [100, 50, 300, 200]
+      });
+      
+      const basicCoords = document.getElementById('basic-coords');
+      document.getElementById('basic-container').addEventListener('cropmove', function(e) {
+        if (!e.detail || !e.detail[1]) return;
+        
+        const rect = e.detail[1];
+        basicCoords.textContent = 'Coordinates: ' + 
+          'x: ' + Math.round(rect.x) + ', ' +
+          'y: ' + Math.round(rect.y) + ', ' +
+          'w: ' + Math.round(rect.w) + ', ' +
+          'h: ' + Math.round(rect.h);
+      });
+      
+      // Aspect Ratio Demo
+      const aspectJcrop = Jcrop('#aspect-image', {
+        setSelect: [100, 50, 300, 200],
+        aspectRatio: 16/9
+      });
+      
+      const aspectCoords = document.getElementById('aspect-coords');
+      document.getElementById('aspect-container').addEventListener('cropmove', function(e) {
+        if (!e.detail || !e.detail[1]) return;
+        
+        const rect = e.detail[1];
+        aspectCoords.textContent = 'Coordinates: ' + 
+          'x: ' + Math.round(rect.x) + ', ' +
+          'y: ' + Math.round(rect.y) + ', ' +
+          'w: ' + Math.round(rect.w) + ', ' +
+          'h: ' + Math.round(rect.h);
+      });
+      
+      // Aspect ratio buttons
+      document.getElementById('aspect-16-9').addEventListener('click', function() {
+        aspectJcrop.setOptions({ aspectRatio: 16/9 });
+      });
+      
+      document.getElementById('aspect-4-3').addEventListener('click', function() {
+        aspectJcrop.setOptions({ aspectRatio: 4/3 });
+      });
+      
+      document.getElementById('aspect-1-1').addEventListener('click', function() {
+        aspectJcrop.setOptions({ aspectRatio: 1 });
+      });
+      
+      document.getElementById('aspect-free').addEventListener('click', function() {
+        aspectJcrop.setOptions({ aspectRatio: 0 });
+      });
+      
+      // Multiple Selections Demo
+      const multipleJcrop = Jcrop('#multiple-image', {
+        multi: true,
+        setSelect: [100, 50, 200, 100]
+      });
+      
+      const multipleCoords = document.getElementById('multiple-coords');
+      document.getElementById('multiple-container').addEventListener('cropmove', function(e) {
+        if (!e.detail || !e.detail[1]) return;
+        
+        const rect = e.detail[1];
+        multipleCoords.textContent = 'Coordinates: ' + 
+          'x: ' + Math.round(rect.x) + ', ' +
+          'y: ' + Math.round(rect.y) + ', ' +
+          'w: ' + Math.round(rect.w) + ', ' +
+          'h: ' + Math.round(rect.h);
+      });
+      
+      // Multiple selection buttons
+      document.getElementById('multiple-add').addEventListener('click', function() {
+        multipleJcrop.newSelection();
+      });
+      
+      document.getElementById('multiple-remove').addEventListener('click', function() {
+        if (multipleJcrop.ui.selection) {
+          multipleJcrop.removeSelection(multipleJcrop.ui.selection);
+        }
+      });
+      
+      document.getElementById('multiple-remove-all').addEventListener('click', function() {
+        const selections = [...multipleJcrop.ui.multi];
+        for (const selection of selections) {
+          multipleJcrop.removeSelection(selection);
+        }
+      });
+      
+      // API Demo
+      let apiJcrop = Jcrop('#api-image', {
+        setSelect: [100, 50, 300, 200]
+      });
+      
+      const apiCoords = document.getElementById('api-coords');
+      document.getElementById('api-container').addEventListener('cropmove', function(e) {
+        if (!e.detail || !e.detail[1]) return;
+        
+        const rect = e.detail[1];
+        apiCoords.textContent = 'Coordinates: ' + 
+          'x: ' + Math.round(rect.x) + ', ' +
+          'y: ' + Math.round(rect.y) + ', ' +
+          'w: ' + Math.round(rect.w) + ', ' +
+          'h: ' + Math.round(rect.h);
+      });
+      
+      // API buttons
+      document.getElementById('api-setselect').addEventListener('click', function() {
+        apiJcrop.setSelect([100, 100, 200, 200]);
+      });
+      
+      document.getElementById('api-animate').addEventListener('click', function() {
+        const img = document.getElementById('api-image');
+        const w = 200;
+        const h = 150;
+        const x = (img.width - w) / 2;
+        const y = (img.height - h) / 2;
+        apiJcrop.animateTo([x, y, w, h]);
+      });
+      
+      document.getElementById('api-disable').addEventListener('click', function() {
+        if (apiJcrop.ui.manager) {
+          apiJcrop.ui.manager.disable();
+        }
+      });
+      
+      document.getElementById('api-enable').addEventListener('click', function() {
+        if (apiJcrop.ui.manager) {
+          apiJcrop.ui.manager.enable();
+        }
+      });
+      
+      document.getElementById('api-destroy').addEventListener('click', function() {
+        apiJcrop.destroy();
+      });
+      
+      document.getElementById('api-reinit').addEventListener('click', function() {
+        apiJcrop = Jcrop('#api-image', {
+          setSelect: [100, 50, 300, 200]
+        });
+      });
+    });
+  </script>
+</body>
 </html>
