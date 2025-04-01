@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jcrop-TS Demo</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      line-height: 1.6;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1 {
+      color: #333;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 10px;
+    }
+    .demo-wrapper {
+      margin: 20px 0;
+    }
+    .buttons {
+      margin-top: 10px;
+    }
+    button {
+      padding: 8px 12px;
+      background: #0078d7;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-right: 8px;
+    }
+    button:hover {
+      background: #0067b8;
+    }
+    .coords {
+      margin-top: 15px;
+      font-family: monospace;
+      background: #f5f5f5;
+      padding: 10px;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Jcrop-TS Demo</h1>
+  
+  <div class="demo-wrapper">
+    <div id="target-container">
+      <img src="../demos/demo_files/pool.jpg" id="target" alt="Crop this image">
+    </div>
+    
+    <div class="buttons">
+      <button id="btn-setselect">Set Selection</button>
+      <button id="btn-animateto">Animate To</button>
+      <button id="btn-release">Release</button>
+      <button id="btn-disable">Disable</button>
+      <button id="btn-enable">Enable</button>
+      <button id="btn-destroy">Destroy</button>
+    </div>
+    
+    <div class="coords" id="coords">
+      Coordinates: None
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize Jcrop
+      var jcrop = Jcrop('#target', {
+        setSelect: [100, 100, 300, 300]
+      });
+      
+      // Get elements
+      var coords = document.getElementById('coords');
+      
+      // Update coordinates on selection changes
+      document.getElementById('target-container').addEventListener('cropmove', function(e) {
+        if (!e.detail || !e.detail[1]) return;
+        
+        var rect = e.detail[1];
+        coords.textContent = 'Coordinates: ' + 
+          'x: ' + Math.round(rect.x) + ', ' +
+          'y: ' + Math.round(rect.y) + ', ' +
+          'w: ' + Math.round(rect.w) + ', ' +
+          'h: ' + Math.round(rect.h);
+      });
+      
+      // Button: Set Selection
+      document.getElementById('btn-setselect').addEventListener('click', function() {
+        jcrop.setSelect([50, 50, 200, 200]);
+      });
+      
+      // Button: Animate To
+      document.getElementById('btn-animateto').addEventListener('click', function() {
+        jcrop.animateTo([200, 200, 250, 250]);
+      });
+      
+      // Button: Release
+      document.getElementById('btn-release').addEventListener('click', function() {
+        jcrop.release();
+      });
+      
+      // Button: Disable
+      document.getElementById('btn-disable').addEventListener('click', function() {
+        if (jcrop.ui.manager) {
+          jcrop.ui.manager.disable();
+        }
+      });
+      
+      // Button: Enable
+      document.getElementById('btn-enable').addEventListener('click', function() {
+        if (jcrop.ui.manager) {
+          jcrop.ui.manager.enable();
+        }
+      });
+      
+      // Button: Destroy
+      document.getElementById('btn-destroy').addEventListener('click', function() {
+        jcrop.destroy();
+        
+        // Re-initialize after 2 seconds
+        setTimeout(function() {
+          jcrop = Jcrop('#target', {
+            setSelect: [100, 100, 300, 300]
+          });
+        }, 2000);
+      });
+    });
+  </script>
+</body>
+</html>

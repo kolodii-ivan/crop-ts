@@ -1,67 +1,166 @@
-Jcrop Image Cropping Plugin
-===========================
+# Jcrop-TS
 
-Jcrop is the quick and easy way to add image cropping functionality to
-your web application. It combines the ease-of-use of a typical jQuery
-plugin with a powerful cross-platform DHTML cropping engine that is
-faithful to familiar desktop graphics applications.
+Image cropping widget in TypeScript. A modern, jQuery-free, rewrite of the classic Jcrop library.
 
-### Feature Overview
+## Features
 
-  * Attaches unobtrusively to any image or block element
-  * Completely based on true prototypical Javascript objects for extreme flexibility
-  * Supports multiple active selections, per-selection customization
-  * Supports aspect ratio locking, minimum/maximum size, and other features
-  * Acts as in-line form element, can receive focus, tab through
-  * Keyboard support for nuding selections and trapping other keys
-  * Inherently API-driven and stylable with CSS
-  * Mobile touch support for iOS and Android
+- Pure TypeScript implementation with no dependencies
+- Modern browser support
+- Similar API to the original Jcrop for easy migration
+- Support for multiple selections
+- Aspect ratio constraints
+- Animation support
+- Touch support for mobile devices
+- Customizable appearance
 
-### Cross-platform Compatibility
+## Installation
 
-The current version of Jcrop has been cross-platform tested and core functionality
-works in all the following browsers:
+```bash
+npm install jcrop-ts
+```
 
-  * Firefox 3+
-  * Safari 4+
-  * Opera 9.5+
-  * Google Chrome 14+
-  * Internet Explorer 7+
+## Basic Usage
 
-Older versions of some browsers may also work.
+```html
+<img src="example.jpg" id="target">
 
-Always thoroughly test any desired functionality on all target platforms and devices.
+<script type="module">
+  import Jcrop from 'jcrop-ts';
+  
+  // Initialize Jcrop on an image
+  const jcrop = Jcrop('#target', {
+    setSelect: [100, 100, 400, 300]
+  });
+  
+  // Listen for crop events
+  document.querySelector('#target').parentElement.addEventListener('cropmove', (e) => {
+    const [selection, coords] = e.detail;
+    console.log('Selected coordinates:', coords);
+  });
+</script>
+```
 
-##### Legacy IE Compatibility
+## API Reference
 
-Internet Explorer 6 suffers some visual problems with the new CSS structure
-and will not be explicitly supported from v2.x and up. Currently Jcrop can still
-be used in IE6, it just looks ugly. IE7 and newer versions deliver a nearly flawless
-Jcrop experience.
+### Initialization
 
--------------
-## MIT License
+```js
+// Initialize with a selector or DOM element
+const jcrop = Jcrop(element, options);
+```
 
-**Jcrop is free software under MIT License.**
+### Options
 
-#### Copyright (c) 2008-2015 Tapmodo Interactive LLC,<br />http://github.com/tapmodo/Jcrop
+```js
+const options = {
+  // Selection coordinates: [x, y, width, height]
+  setSelect: [100, 100, 400, 300],
+  
+  // Aspect ratio (width/height)
+  aspectRatio: 16/9,
+  
+  // Allow multiple selections
+  multi: true,
+  
+  // Maximum number of selections
+  multiMax: 3,
+  
+  // Animation settings
+  animation: true,
+  animDuration: 400,
+  
+  // Background appearance
+  bgColor: 'black',
+  bgOpacity: 0.6,
+  
+  // Selection constraints
+  minSize: [50, 50],
+  maxSize: [500, 500],
+  
+  // Handlers and UI elements
+  allowSelect: true,
+  canDelete: true,
+  canDrag: true,
+  canResize: true
+};
+```
 
-Permission is hereby granted, free of charge, to any person obtaining
-a copy of this software and associated documentation files (the
-"Software"), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
+### Methods
 
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
+```js
+// Set a specific selection area [x, y, width, height]
+jcrop.setSelect([100, 100, 400, 300]);
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
-LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+// Animate selection to a new position
+jcrop.animateTo([200, 200, 300, 300]);
 
+// Get the current selection coordinates
+const coords = jcrop.getSelection();
+
+// Create a new selection
+const selection = jcrop.newSelection();
+
+// Delete the active selection
+jcrop.deleteSelection();
+
+// Set a different image
+jcrop.setImage('new-image.jpg', (width, height) => {
+  console.log('New image loaded:', width, height);
+});
+
+// Disable/enable the crop interface
+jcrop.ui.manager.disable();
+jcrop.ui.manager.enable();
+
+// Destroy the Jcrop instance
+jcrop.destroy();
+```
+
+### Events
+
+```js
+// Selection creation
+element.addEventListener('cropcreate', (e) => {
+  console.log('Selection created:', e.detail);
+});
+
+// Selection movement
+element.addEventListener('cropmove', (e) => {
+  const [selection, coords] = e.detail;
+  console.log('Selection moved:', coords);
+});
+
+// Selection start (on mousedown/touchstart)
+element.addEventListener('cropstart', (e) => {
+  console.log('Started adjusting selection:', e.detail);
+});
+
+// Selection end (on mouseup/touchend)
+element.addEventListener('cropend', (e) => {
+  console.log('Finished adjusting selection:', e.detail);
+});
+```
+
+## Building from Source
+
+```bash
+# Install dependencies
+npm install
+
+# Development build with watch
+npm run dev
+
+# Production build
+npm run build
+
+# Start development server
+npm start
+```
+
+## Credits
+
+This project is a TypeScript rewrite of [Jcrop](http://jcrop.org/), originally created by Tapmodo Interactive LLC.
+
+## License
+
+MIT License
