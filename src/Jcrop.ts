@@ -6,6 +6,7 @@ import { DragState } from './components/DragState';
 import { StageManager } from './components/StageManager';
 import { ImageLoader } from './components/ImageLoader';
 import { Touch } from './components/Touch';
+import { KeyWatcher } from './components/KeyWatcher';
 import { registerFilter, getFilterConstructor } from './filters/registry';
 import { DEFAULT_OPTIONS } from './defaults';
 
@@ -18,7 +19,7 @@ export class Jcrop extends EventEmitter {
   public ui: {
     multi: Selection[];
     selection: Selection | null;
-    keyboard?: any;
+    keyboard?: KeyWatcher;
     manager?: StageManager;
   };
   public state: DragState | null = null;
@@ -71,6 +72,9 @@ export class Jcrop extends EventEmitter {
   init(): void {
     // Initialize stage manager
     this.ui.manager = new StageManager(this);
+    
+    // Initialize keyboard support
+    this.ui.keyboard = new KeyWatcher(this);
     
     // Apply filters
     this.applyFilters();
@@ -159,6 +163,11 @@ export class Jcrop extends EventEmitter {
    * Destroy the Jcrop instance
    */
   destroy(): void {
+    // Clean up keyboard events
+    if (this.ui.keyboard) {
+      this.ui.keyboard.destroy();
+    }
+    
     if (this.options.imgsrc) {
       // If we have an image, put it back where it was
       const img = this.options.imgsrc;
