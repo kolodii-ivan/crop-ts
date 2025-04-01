@@ -12,6 +12,7 @@ Image cropping widget in TypeScript. A modern, jQuery-free, rewrite of the class
 - Animation support
 - Touch support for mobile devices
 - Customizable appearance
+- Comprehensive test suite
 
 ## Installation
 
@@ -141,7 +142,7 @@ element.addEventListener('cropend', (e) => {
 });
 ```
 
-## Building from Source
+## Building and Testing
 
 ```bash
 # Install dependencies
@@ -155,6 +156,12 @@ npm run build
 
 # Start development server
 npm start
+
+# Run tests
+npm test
+
+# Run tests with coverage
+npm run test:coverage
 ```
 
 ## Credits
