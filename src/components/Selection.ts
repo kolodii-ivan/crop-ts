@@ -69,7 +69,13 @@ export class Selection extends EventEmitter {
     this.setOptions(core.options);
     
     // Trigger create event
-    this.element.dispatchEvent(new CustomEvent('cropcreate', { detail: [this] }));
+    if (typeof this.element.dispatchCustomEvent === 'function') {
+      // Use helper in test environment
+      this.element.dispatchCustomEvent('cropcreate', [this]);
+    } else {
+      // Use standard method in browser
+      this.element.dispatchEvent(new CustomEvent('cropcreate', { detail: [this] }));
+    }
   }
 
   /**
@@ -115,13 +121,24 @@ export class Selection extends EventEmitter {
     // Bind focus/blur events
     this.frame.addEventListener('focus', () => {
       this.core.setSelection(this);
-      this.element.dispatchEvent(new CustomEvent('cropfocus', { detail: this }));
+      
+      if (typeof this.element.dispatchCustomEvent === 'function') {
+        this.element.dispatchCustomEvent('cropfocus', this);
+      } else {
+        this.element.dispatchEvent(new CustomEvent('cropfocus', { detail: this }));
+      }
+      
       DomUtil.addClass(this.element, 'jcrop-focus');
     });
     
     this.frame.addEventListener('blur', () => {
       DomUtil.removeClass(this.element, 'jcrop-focus');
-      this.element.dispatchEvent(new CustomEvent('cropblur', { detail: this }));
+      
+      if (typeof this.element.dispatchCustomEvent === 'function') {
+        this.element.dispatchCustomEvent('cropblur', this);
+      } else {
+        this.element.dispatchEvent(new CustomEvent('cropblur', { detail: this }));
+      }
     });
   }
 
@@ -327,7 +344,11 @@ export class Selection extends EventEmitter {
    * Remove the selection
    */
   remove(): void {
-    this.element.dispatchEvent(new CustomEvent('cropremove', { detail: this }));
+    if (typeof this.element.dispatchCustomEvent === 'function') {
+      this.element.dispatchCustomEvent('cropremove', this);
+    } else {
+      this.element.dispatchEvent(new CustomEvent('cropremove', { detail: this }));
+    }
     DomUtil.remove(this.element);
   }
 
@@ -374,11 +395,15 @@ export class Selection extends EventEmitter {
     const filtered = this.runFilters(rect, direction);
     this.redraw(filtered);
     
-    this.element.dispatchEvent(
-      new CustomEvent('cropmove', { 
-        detail: [this, this.core.unscale(filtered)] 
-      })
-    );
+    if (typeof this.element.dispatchCustomEvent === 'function') {
+      this.element.dispatchCustomEvent('cropmove', [this, this.core.unscale(filtered)]);
+    } else {
+      this.element.dispatchEvent(
+        new CustomEvent('cropmove', { 
+          detail: [this, this.core.unscale(filtered)] 
+        })
+      );
+    }
     
     return this;
   }

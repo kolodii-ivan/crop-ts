@@ -2,6 +2,19 @@
  * Jcrop TypeScript Core Types
  */
 
+// Add customEvent methods to the global HTMLElement interface
+declare global {
+  interface HTMLElement {
+    dispatchCustomEvent?: (type: string, detail: any) => boolean;
+    makeCustomEvent?: (type: string, detail: any) => void;
+  }
+  
+  interface Element {
+    dispatchCustomEvent?: (type: string, detail: any) => boolean;
+    makeCustomEvent?: (type: string, detail: any) => void;
+  }
+}
+
 export interface JcropOptions {
   // Selection Behavior
   edge?: { n: number; s: number; e: number; w: number };

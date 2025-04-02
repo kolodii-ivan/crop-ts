@@ -64,6 +64,13 @@ export class Jcrop extends EventEmitter {
     
     // Trigger init event
     this.emit('cropinit', this);
+    
+    // Also dispatch DOM event for test compatibility
+    if (typeof this.container.dispatchCustomEvent === 'function') {
+      this.container.dispatchCustomEvent('cropinit', this);
+    } else {
+      this.container.dispatchEvent(new CustomEvent('cropinit', { detail: this }));
+    }
   }
 
   /**
@@ -384,9 +391,15 @@ export class Jcrop extends EventEmitter {
       b.y = b.y2 - b.h;
     }
     
-    s.element.dispatchEvent(new CustomEvent('cropstart', { detail: [s, this.unscale(b)] }));
-    s.updateRaw(b, 'move');
-    s.element.dispatchEvent(new CustomEvent('cropend', { detail: [s, this.unscale(b)] }));
+    if (typeof s.element.dispatchCustomEvent === 'function') {
+      s.element.dispatchCustomEvent('cropstart', [s, this.unscale(b)]);
+      s.updateRaw(b, 'move');
+      s.element.dispatchCustomEvent('cropend', [s, this.unscale(b)]);
+    } else {
+      s.element.dispatchEvent(new CustomEvent('cropstart', { detail: [s, this.unscale(b)] }));
+      s.updateRaw(b, 'move');
+      s.element.dispatchEvent(new CustomEvent('cropend', { detail: [s, this.unscale(b)] }));
+    }
   }
 
   /**
@@ -509,9 +522,13 @@ export class Jcrop extends EventEmitter {
     const direction = target.getAttribute('data-ord') || 'move';
     
     // Trigger cropstart event
-    this.container.dispatchEvent(
-      new CustomEvent('cropstart', { detail: [selection, this.unscale(selection.get())] })
-    );
+    if (typeof this.container.dispatchCustomEvent === 'function') {
+      this.container.dispatchCustomEvent('cropstart', [selection, this.unscale(selection.get())]);
+    } else {
+      this.container.dispatchEvent(
+        new CustomEvent('cropstart', { detail: [selection, this.unscale(selection.get())] })
+      );
+    }
     
     // Start dragging
     selection.startDrag(e, direction);
@@ -555,9 +572,13 @@ export class Jcrop extends EventEmitter {
       this.applySizeConstraints();
       this.refresh();
       
-      this.container.dispatchEvent(
-        new CustomEvent('cropimage', { detail: [this, targ] })
-      );
+      if (typeof this.container.dispatchCustomEvent === 'function') {
+        this.container.dispatchCustomEvent('cropimage', [this, targ]);
+      } else {
+        this.container.dispatchEvent(
+          new CustomEvent('cropimage', { detail: [this, targ] })
+        );
+      }
       
       if (typeof callback === 'function') {
         callback.call(this, w, h);

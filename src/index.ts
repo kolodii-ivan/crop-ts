@@ -7,6 +7,7 @@
  */
 
 import { Jcrop } from './Jcrop';
+import { DEFAULT_OPTIONS } from './defaults';
 import './styles/jcrop.scss';
 
 // Import filters
@@ -23,6 +24,12 @@ function create(element: HTMLElement | string, options: any = {}): Jcrop {
 create.attach = (element: HTMLElement, options: any = {}): Jcrop => {
   return new Jcrop(element, options);
 };
+
+// Add defaults to match legacy structure
+create.defaults = DEFAULT_OPTIONS;
+
+// Add Jcrop class
+create.Jcrop = Jcrop;
 
 // Export default as the main API
 export default create;

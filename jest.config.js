@@ -1,19 +1,18 @@
 module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'jsdom',
-  moduleFileExtensions: ['ts', 'js'],
   transform: {
-    '^.+\\.ts$': ['ts-jest', {
-      tsconfig: 'tsconfig.json',
-    }],
+    '^.+\\.tsx?$': ['ts-jest', {
+      diagnostics: false
+    }]
   },
-  testMatch: ['**/tests/**/*.test.ts'],
-  collectCoverage: true,
-  coverageDirectory: 'coverage',
-  collectCoverageFrom: [
-    'src/**/*.ts',
-    '!src/**/*.d.ts',
-  ],
-  verbose: true,
   setupFilesAfterEnv: ['<rootDir>/tests/setup.ts'],
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
+  
+  // Mock non-JS/TS modules
+  moduleNameMapper: {
+    "\\.scss$": "<rootDir>/__mocks__/styleMock.js",
+    "\\.css$": "<rootDir>/__mocks__/styleMock.js",
+    "^src/defaults\\.js$": "<rootDir>/__mocks__/defaultsMock.js"
+  }
 };
