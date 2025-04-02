@@ -1,21 +1,39 @@
-// Jest setup file
+// Simple setup file for tests
 
-// Mock for window.requestAnimationFrame
-global.requestAnimationFrame = callback => {
-  setTimeout(callback, 0);
+// Mock requestAnimationFrame
+window.requestAnimationFrame = (callback: FrameRequestCallback): number => {
+  return setTimeout(() => callback(Date.now()), 0);
 };
 
-// Mock for CustomEvent if not available in JSDOM
+// Add mock node styles property to HTMLElement
+if (!HTMLElement.prototype.scrollIntoView) {
+  HTMLElement.prototype.scrollIntoView = jest.fn();
+}
+
+// Add simple CustomEvent support to ensure it exists in the test environment
 if (typeof window.CustomEvent !== 'function') {
-  class CustomEvent extends Event {
-    constructor(event: string, params?: CustomEventInit) {
-      params = params || { bubbles: false, cancelable: false, detail: null };
-      super(event, params);
-      this.detail = params.detail !== undefined ? params.detail : null;
-    }
-    
+  class CustomEventPolyfill extends Event {
     detail: any;
+    
+    constructor(type: string, options: any = {}) {
+      super(type, options);
+      this.detail = options?.detail;
+    }
   }
   
-  global.CustomEvent = CustomEvent;
+  // @ts-ignore
+  window.CustomEvent = CustomEventPolyfill;
+}
+
+// Add a test helper to Element prototype for making custom events
+if (!('makeCustomEvent' in Element.prototype)) {
+  // @ts-ignore
+  Element.prototype.makeCustomEvent = function(type: string, detail: any): void {
+    const event = new CustomEvent(type, { 
+      bubbles: true, 
+      cancelable: true, 
+      detail: detail 
+    });
+    this.dispatchEvent(event);
+  };
 }

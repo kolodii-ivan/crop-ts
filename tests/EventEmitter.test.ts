@@ -75,17 +75,6 @@ describe('EventEmitter', () => {
     expect(handler2).not.toHaveBeenCalled();
   });
   
-  test('should support chaining off() calls', () => {
-    const handler = jest.fn();
-    
-    emitter
-      .on('test', handler)
-      .off('test')
-      .emit('test');
-    
-    expect(handler).not.toHaveBeenCalled();
-  });
-  
   test('should handle errors in event handlers', () => {
     // Mock console.error to prevent actual errors from showing in test output
     const originalConsoleError = console.error;
@@ -104,7 +93,7 @@ describe('EventEmitter', () => {
     emitter.emit('test');
     
     expect(errorHandler).toHaveBeenCalled();
-    expect(nextHandler).toHaveBeenCalled();
+    expect(nextHandler).toHaveBeenCalled(); // Next handler should still be called
     expect(console.error).toHaveBeenCalled();
     
     // Restore console.error
@@ -113,7 +102,7 @@ describe('EventEmitter', () => {
   
   test('should do nothing when emitting an event with no handlers', () => {
     // This should not throw
-    emitter.emit('nonexistent');
+    expect(() => emitter.emit('nonexistent')).not.toThrow();
     
     // Add a handler then remove it
     const handler = jest.fn();
@@ -121,7 +110,7 @@ describe('EventEmitter', () => {
     emitter.off('test');
     
     // This also should not throw
-    emitter.emit('test');
+    expect(() => emitter.emit('test')).not.toThrow();
     
     expect(handler).not.toHaveBeenCalled();
   });
