@@ -1,12 +1,33 @@
-Jcrop Image Cropping Plugin
+Jcrop Image Cropping Library
 ===========================
 
-Jcrop is the quick and easy way to add image cropping functionality to
-your web application. It combines the ease-of-use of a typical jQuery
-plugin with a powerful cross-platform DHTML cropping engine that is
-faithful to familiar desktop graphics applications.
+Jcrop is the quick and easy way to add image cropping functionality to your web application.
+It is a modern, framework-agnostic JavaScript/TypeScript library (no jQuery required)
+that provides a powerful cross-platform DHTML cropping engine faithful to desktop graphics applications.
 
-### Feature Overview
+## Getting Started
+
+Installation:
+
+    npm install
+
+Build:
+
+    npm run build
+
+Test:
+
+    npm run test
+
+Usage (ES Modules):
+
+    import { Jcrop } from './dist/src/plugin.js';
+    const el = document.getElementById('cropbox');
+    Jcrop(el, {
+      // your options here
+    });
+
+## Feature Overview
 
   * Attaches unobtrusively to any image or block element
   * Completely based on true prototypical Javascript objects for extreme flexibility
@@ -31,6 +52,8 @@ works in all the following browsers:
 Older versions of some browsers may also work.
 
 Always thoroughly test any desired functionality on all target platforms and devices.
+  
+This library has no runtime dependencies and works in any environment supporting ES5 or later.
 
 ##### Legacy IE Compatibility
 
